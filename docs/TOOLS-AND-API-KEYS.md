@@ -13,7 +13,7 @@ edit. Bring your own accounts and credits, and configure only what you use.
 | HyperFrames and GSAP | Video compositions and animation | Installed by `npm ci`. Rendering runs locally. Some templates use online fonts or CDNs; localize selected assets for final rendering. |
 | ElevenLabs Scribe | Nate's default for speech transcription | Your own key with `speech_to_text` access and available usage. The included helper sends audio to ElevenLabs. |
 | OpenAI Whisper API | Alternative cloud transcription | Your own OpenAI API key and API billing. Ask the assistant to configure the call and normalize its word timestamps. |
-| Local Whisper or whisper.cpp | Alternative transcription on your computer | Separate runtime and model installation. No cloud transcription key; needs model downloads, disk space, and local compute. |
+| Local Whisper (faster-whisper) | Free transcription on your computer | Python 3.9+. `npm run setup:whisper` installs it and downloads a model (~0.5 GB). No key, no upload. |
 | Kie.ai | Optional generated moving B-roll, images, and other supported assets | Your own account, key, and credits. Existing footage and supplied assets can be used instead. |
 | Your footage, logos, fonts, music, and sound effects | Building the actual edit | Supply assets you can use. The kit does not include a stock-media or music subscription. |
 
@@ -38,18 +38,44 @@ for current model options and usage details.
 
 You can prompt the assistant to use another provider. The bundled
 `transcribe-elevenlabs.mjs` script itself only calls ElevenLabs; changing the key
-does not switch its provider.
+does not switch its provider. `transcribe-local.mjs` is the free local option.
 
 For the OpenAI API, use `whisper-1`, `response_format="verbose_json"`, and
 `timestamp_granularities=["word"]`. Store `OPENAI_API_KEY` locally. Check current
 upload limits before sending long recordings; split audio when needed and retain
 chunk offsets. See [OpenAI's guide](https://developers.openai.com/api/docs/guides/speech-to-text).
 
-For local transcription, ask the assistant to configure
-[OpenAI Whisper](https://github.com/openai/whisper) or
-[whisper.cpp](https://github.com/ggml-org/whisper.cpp). Python Whisper requires
-Python and model dependencies; whisper.cpp has its own installation. Neither is
-installed by `npm ci`.
+### Local Whisper (free, no key)
+
+The kit includes a local transcriber built on
+[faster-whisper](https://github.com/SYSTRAN/faster-whisper). It needs Python 3.9+
+and is not installed by `npm ci`. Install it once:
+
+```sh
+npm run setup:whisper
+```
+
+This creates `.venv-whisper/` in the repository (gitignored), installs
+faster-whisper, and downloads the default `small.en` model (~0.5 GB) from
+HuggingFace. Then transcribe:
+
+```sh
+npm run transcribe:local -- video-projects/my-video/assets/raw.mp4
+```
+
+It writes `raw.json` beside the source in the format below, with
+`type: "word"`, a per-word `confidence`, and duration from ffprobe, so the
+cutting tools read it directly. Audio never leaves your computer. Options:
+
+- `--model tiny.en | base.en | small.en | medium.en | large-v3`: larger is more
+  accurate and slower. `small.en` transcribes about twice as fast as real time
+  on a 4-core CPU. Use `setup:whisper -- --model <name>` to pre-download another.
+- `--language es` with a multilingual model (`small`, `medium`, `large-v3`).
+- `--device cuda` on an NVIDIA GPU; `--vad` skips long non-speech stretches.
+- `WHISPER_PYTHON=<path>` uses a different Python that has faster-whisper.
+
+Spot-check a few words against the audio before cutting, as with any provider.
+Names and jargon are where Whisper errs most.
 
 The cutting tools require this common format, with **word-level times in seconds**
 on the exact source recording's timeline:

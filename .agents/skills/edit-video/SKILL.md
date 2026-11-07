@@ -13,8 +13,10 @@ missing, propose a style from `style-library/registry.json` based on the footage
    into the project's assets or reference an explicitly provided local path.
 2. Read `docs/TOOLS-AND-API-KEYS.md` before service setup. Reuse a matching word
    transcript. Otherwise use the student's chosen provider; Nate defaults to
-   `node scripts/transcribe-elevenlabs.mjs <source>`. OpenAI Whisper and local
-   Whisper are supported workflow alternatives after transcript normalization.
+   `node scripts/transcribe-elevenlabs.mjs <source>`. For free local Whisper use
+   `node scripts/transcribe-local.mjs <source>` (one-time `npm run setup:whisper`);
+   it already writes the normalized format. OpenAI Whisper is a supported
+   alternative after transcript normalization.
    Check available credentials or local dependencies. Explain uploads and costs
    before any service call whose authorization is still missing.
 3. Read `../cut-silences/SKILL.md`. Produce an EDL and a retimed transcript, and

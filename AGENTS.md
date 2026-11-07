@@ -62,7 +62,8 @@ Before choosing a transcription, asset-generation, or voiceover service, read
 `docs/TOOLS-AND-API-KEYS.md` and check the user's provider choice and local setup.
 ElevenLabs Scribe is Nate's default; honor requests for OpenAI Whisper, local
 Whisper, or another provider. Normalize verified word timestamps for the cutting
-tools. The included transcription script is ElevenLabs-only. Kie.ai is optional
+tools. `npm run transcribe` calls ElevenLabs; `npm run transcribe:local` runs
+free local Whisper after `npm run setup:whisper`. Kie.ai is optional
 and needs a configured integration and credits. Reuse existing transcripts and
 assets; make any unapproved uploads or paid calls concrete before asking.
 

@@ -10,7 +10,15 @@ node scripts/transcribe-elevenlabs.mjs video-projects/my-video/assets/raw.mp4
 ```
 
 This is Nate's default and uploads audio to ElevenLabs using your key and credits.
-You may choose OpenAI Whisper, local Whisper, or another provider instead; see
+For free transcription on your own machine, with no key and no upload, install
+local Whisper once and use it instead:
+
+```sh
+npm run setup:whisper
+npm run transcribe:local -- video-projects/my-video/assets/raw.mp4
+```
+
+You may also choose OpenAI Whisper or another provider; see
 [provider setup and transcript normalization](TOOLS-AND-API-KEYS.md).
 You can also supply an existing word-level
 JSON transcript with `words: [{text, start, end}]` and `audio_duration_secs`.
