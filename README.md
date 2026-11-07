@@ -54,8 +54,9 @@ https://github.com/user-attachments/assets/4ad48761-d14c-407a-9dec-1b76a9afb04a
 
 **Nate uses ElevenLabs Scribe to transcribe and Kie.ai to generate videos and
 image assets.** Bring your own API keys and credits when using those services.
-You can ask the assistant to use OpenAI Whisper or local Whisper instead, or
-supply an existing word-level transcript. Generated assets are optional.
+For free transcription with no key, run `npm run setup:whisper` once, then
+`npm run transcribe:local -- <video>` (local Whisper). You can also ask for
+OpenAI Whisper or supply an existing word-level transcript. Generated assets are optional.
 
 The local starter needs no paid transcription or generation API. See the
 [tools, accounts, and API-key guide](docs/TOOLS-AND-API-KEYS.md) for required tools,
@@ -76,8 +77,9 @@ npm test
 ```
 
 Setup checks the tools and creates `.env` only if it is absent. Add only the keys
-for services you choose. The included transcription helper uses ElevenLabs;
-Whisper and Kie.ai integrations need the setup described in the
+for services you choose. `npm run transcribe` uses ElevenLabs;
+`npm run setup:whisper` installs free local Whisper (needs Python 3.9+).
+OpenAI Whisper and Kie.ai integrations need the setup described in the
 [tools guide](docs/TOOLS-AND-API-KEYS.md). [Setup and troubleshooting](docs/SETUP.md).
 
 ## Render your first example

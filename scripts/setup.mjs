@@ -14,5 +14,6 @@ if (Number(process.versions.node.split('.')[0]) < 22) { console.error('Node 22+ 
 if (!existsSync(join(root, '.env'))) { copyFileSync(join(root, '.env.example'), join(root, '.env')); console.log('Created local .env. Fill only the keys your chosen services need.'); }
 else console.log('Existing .env preserved.');
 console.log('Service setup and alternatives: docs/TOOLS-AND-API-KEYS.md');
+console.log('Free local transcription (optional): npm run setup:whisper');
 console.log('Next: npx hyperframes doctor (Chrome diagnostics), then npm run demo.');
 process.exitCode = missing ? 1 : 0;

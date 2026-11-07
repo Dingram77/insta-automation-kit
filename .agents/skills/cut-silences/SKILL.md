@@ -21,7 +21,8 @@ A word-level transcript JSON. Either the ElevenLabs Scribe shape
 `{ words: [{ text, start, end }] }`. Generate one with the workspace transcriber:
 
 ```bash
-node scripts/transcribe-elevenlabs.mjs path/to/raw.mp4    # -> path/to/raw.json
+node scripts/transcribe-elevenlabs.mjs path/to/raw.mp4    # -> path/to/raw.json (ElevenLabs)
+node scripts/transcribe-local.mjs path/to/raw.mp4         # -> path/to/raw.json (local Whisper, free)
 ```
 
 ## Usage
